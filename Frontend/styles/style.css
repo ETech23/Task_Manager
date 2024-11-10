@@ -1,0 +1,41 @@
+
+
+/* Basic styling */
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#auth-section, #dashboard {
+  max-width: 500px;
+  width: 100%;
+  padding: 20px;
+  border: 1px solid #ddd;
+  margin: 20px;
+  border-radius: 8px;
+}
+
+/* Form and input styling */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input, textarea, select, button {
+  margin: 5px 0;
+  padding: 8px;
+}
+
+/* Task List */
+.task {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+
+button {
+  cursor: pointer;
+}
