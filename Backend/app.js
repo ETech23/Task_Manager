@@ -17,7 +17,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: process.env.CLIENT_URL,    // Allow requests from your frontend domain
+  origin: process.env.https://task-manager-k0gj4sngs-etech23s-projects.vercel.app,    // Allow requests from your frontend domain
   credentials: true,                 // Allow credentials (cookies) in CORS
 }));
 app.use(express.json());

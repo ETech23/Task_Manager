@@ -1,30 +1,5 @@
-// Show or hide the authentication section
-function showAuthSection() {
-  document.getElementById("auth-section").style.display = "block";
-  document.getElementById("dashboard").style.display = "none";
-}
-
-// Toggle between Login and Sign-Up Forms
-function toggleAuthForm() {
-  const loginForm = document.getElementById("login-form");
-  const signupForm = document.getElementById("signup-form");
-  const authTitle = document.getElementById("auth-title");
-  const toggleAuthText = document.getElementById("toggle-auth");
-
-  if (loginForm.style.display === "none") {
-    // Switch to Login Form
-    loginForm.style.display = "block";
-    signupForm.style.display = "none";
-    authTitle.textContent = "Login";
-    toggleAuthText.innerHTML = `Don't have an account? <a href="#" onclick="toggleAuthForm()">Sign Up</a>`;
-  } else {
-    // Switch to Sign-Up Form
-    loginForm.style.display = "none";
-    signupForm.style.display = "block";
-    authTitle.textContent = "Sign Up";
-    toggleAuthText.innerHTML = `Already have an account? <a href="#" onclick="toggleAuthForm()">Login</a>`;
-  }
-}
+// Define the backend base URL for Fly.io
+const API_BASE_URL =" https://backend-white-frog-846.fly.dev";
 
 // Handle Login Form Submission
 document.getElementById("login-form").addEventListener("submit", async (e) => {
@@ -76,7 +51,7 @@ function toggleTaskForm(show) {
 // Fetch authentication status
 async function fetchAuthStatus() {
   try {
-    const response = await fetch('/api/auth/status', {
+    const response = await fetch(`${API_BASE_URL}/api/auth/status`, {
       method: 'GET',
       credentials: 'include', // Include cookies for authentication
     });
@@ -91,7 +66,7 @@ async function fetchAuthStatus() {
 // Authenticate user login
 async function authenticateUser(username, password) {
   try {
-    const response = await fetch('/api/auth/login', {
+    const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include', // Include cookies for session management
@@ -107,7 +82,7 @@ async function authenticateUser(username, password) {
 // Register a new user
 async function registerUser(userData) {
   try {
-    const response = await fetch('/api/auth/register', {
+    const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(userData)
