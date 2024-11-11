@@ -15,10 +15,10 @@ connectDB();
 
 const app = express();
 
-// Middleware
+// Use CORS with environment variable for allowed origin
 app.use(cors({
-  origin: process.env.https://task-manager-k0gj4sngs-etech23s-projects.vercel.app,    // Allow requests from your frontend domain
-  credentials: true,                 // Allow credentials (cookies) in CORS
+  origin: process.env.CLIENT_URL,   // Use CLIENT_URL from environment variables
+  credentials: true,
 }));
 app.use(express.json());
 app.use(cookieParser());              // Use cookie-parser to handle cookies
