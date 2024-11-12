@@ -29,17 +29,29 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;
+    console.log("Login attempt for username:", username);
 
     // Find user by username
     const user = await User.findOne({ username });
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+    if (!user) {
+      console.log("Login failed: User not found for username:", username);
       return res.status(401).json({ message: "Invalid credentials" });
     }
+    console.log("User found:", user.username);
+
+    // Compare the provided password with the stored hashed password
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    if (!isPasswordCorrect) {
+      console.log("Login failed: Incorrect password for username:", username);
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+    console.log("Password verified for username:", username);
 
     // Generate a JWT token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
+    console.log("JWT token generated for user:", username);
 
     // Set the token in a secure HTTP-only cookie
     res
@@ -49,6 +61,7 @@ exports.login = async (req, res) => {
         maxAge: 3600000, // 1 hour
       })
       .json({ message: "Login successful" });
+    console.log("Login successful for user:", username);
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ message: "Login failed due to server error." });
