@@ -38,14 +38,16 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
     console.log("User found:", user.username);
+    console.log("Stored hashed password:", user.password);
 
     // Compare the provided password with the stored hashed password
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    console.log("Password comparison result:", isPasswordCorrect);
+    
     if (!isPasswordCorrect) {
       console.log("Login failed: Incorrect password for username:", username);
       return res.status(401).json({ message: "Invalid credentials" });
     }
-    console.log("Password verified for username:", username);
 
     // Generate a JWT token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
