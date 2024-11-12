@@ -20,7 +20,8 @@ exports.register = async (req, res) => {
 
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Registration error:", error);
+    res.status(500).json({ message: "Registration failed due to server error." });
   }
 };
 
@@ -44,12 +45,13 @@ exports.login = async (req, res) => {
     res
       .cookie("token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production", // secure in production
+        secure: process.env.NODE_ENV === "production", // Secure in production
         maxAge: 3600000, // 1 hour
       })
       .json({ message: "Login successful" });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Login error:", error);
+    res.status(500).json({ message: "Login failed due to server error." });
   }
 };
 
@@ -63,6 +65,7 @@ exports.checkAuth = (req, res) => {
     jwt.verify(token, process.env.JWT_SECRET);
     res.status(200).json({ loggedIn: true });
   } catch (error) {
+    console.error("Auth check error:", error);
     res.status(401).json({ loggedIn: false });
   }
 };
